@@ -82,6 +82,10 @@ public class SpellOrb : MonoBehaviour {
 			Debug.Log ("cast fireball");
 			Instantiate(fireballPrefab,this.transform.position,GetDirection());
 			break;
+		case 30:
+			Debug.Log ("cast windblow");
+			Windblow.Cast(transform.position,transform.forward);
+			break;
 		default:
 			Debug.Log ("No spell");
 			break;

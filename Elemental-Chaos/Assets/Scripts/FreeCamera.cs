@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FreeCamera : MonoBehaviour {
 
-	float cameraSpeed = 1;
+	public float cameraSpeed = 1;
 	// Use this for initialization
 	void Start () {
 		Screen.showCursor = false;

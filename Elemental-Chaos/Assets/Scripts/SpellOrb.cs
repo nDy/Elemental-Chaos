@@ -5,6 +5,10 @@ public class SpellOrb : MonoBehaviour {
 
 	enum ELEMENTS {ether=0,fire=1,water=2,wind=3,earth=4,spirit=5};
 
+	public GameObject wind, water, land, fire, spirit;
+	bool oWind, oWater, oLand, oFire, oSpirit; //opaque
+	float sWind, sWater, sLand, sFire, sSpirit; //show
+
 	public Texture crosshair;
 	public GameObject fireballPrefab;
 	Transform position;
@@ -16,6 +20,9 @@ public class SpellOrb : MonoBehaviour {
 	void Start () {
 		myElements = new ELEMENTS[maxElements];
 		cooldowns = new float[6];
+
+		float iO = 0.31f; //initial opaccity
+		sWind = iO; sWater = iO; sLand = iO; sFire = iO; sSpirit = iO;
 	}
 	
 
@@ -41,22 +48,42 @@ public class SpellOrb : MonoBehaviour {
 		
 		if (Input.GetKeyUp("1")) {
 			selectRune(ELEMENTS.fire);
+			oFire = true;
 		}
 		if (Input.GetKeyUp("2")) {
 			selectRune(ELEMENTS.water);
+			oWater = true;
 		}
 		if (Input.GetKeyUp("3")) {
 			selectRune(ELEMENTS.wind);
+			oWind = true;
 		}
 		if (Input.GetKeyUp("4")) {
 			selectRune(ELEMENTS.earth);
+			oLand = true;
 		}
 		if (Input.GetKeyUp("5")) {
 			selectRune(ELEMENTS.spirit);
+			oSpirit = true;
 		}
 		if(Input.GetMouseButtonUp(0)){
 			Cast();
 		}
+
+		if (oWind)
+			Debug.Log("aire");
+		
+		if (oLand)
+			Debug.Log("tierra");
+		
+		if (oWater)
+			Debug.Log("agua");
+		
+		if (oFire)
+			Debug.Log("fuego");
+		
+		if (oSpirit)
+			Debug.Log("espiritu");
 	}
 
 	void selectRune(ELEMENTS element){
@@ -107,10 +134,86 @@ public class SpellOrb : MonoBehaviour {
 	void ClearElements(){
 		for(int i=0;i<maxElements;i++){
 			myElements[i]=ELEMENTS.ether;
+			oWind = false;
+			oWater = false;
+			oLand = false;
+			oFire = false;
+			oSpirit = false;
 		}
 	}
 
 	void OnGUI(){
+		
+		if (oWind) 
+		{
+			if(sWind < 1)
+				sWind += Time.deltaTime * 2;
+			wind.guiTexture.color = Color.gray * sWind;
+		}
+		else
+		{
+			if(sWind >= 1)
+				while(sWind > 0.31f)
+				sWind -= Time.deltaTime * 2;
+			wind.guiTexture.color = Color.gray * sWind;
+		}
+		
+		if (oLand)
+		{
+			if(sLand < 1)
+				sLand += Time.deltaTime * 2;
+			land.guiTexture.color = Color.gray * sLand;
+		}
+		else
+		{
+			if(sLand >= 1)
+				while(sLand > 0.31f)
+					sLand -= Time.deltaTime * 2;
+			land.guiTexture.color = Color.gray * sLand;
+		}
+		
+		if (oWater)
+		{
+			if(sWater < 1)
+				sWater += Time.deltaTime * 2;
+			water.guiTexture.color = Color.gray * sWater;
+		}
+		else
+		{
+			if(sWater >= 1)
+				while(sWater > 0.31f)
+					sWater -= Time.deltaTime * 2;
+			water.guiTexture.color = Color.gray * sWater;
+		}
+
+		if (oFire)
+		{
+			if(sFire < 1)
+				sFire += Time.deltaTime * 2;
+			fire.guiTexture.color = Color.gray * sFire;
+		}
+		else
+		{
+			if(sFire >= 1)
+				while(sFire > 0.31f)
+					sFire -= Time.deltaTime * 2;
+			fire.guiTexture.color = Color.gray * sFire;
+		}
+		
+		if (oSpirit)
+		{
+			if(sSpirit < 1)
+				sSpirit += Time.deltaTime * 2;
+			spirit.guiTexture.color = Color.gray * sSpirit;
+		}
+		else
+		{
+			if(sSpirit >= 1)
+				while(sSpirit > 0.31f)
+					sSpirit -= Time.deltaTime * 2;
+			spirit.guiTexture.color = Color.gray * sSpirit;
+		}
+
 		string text="";
 		for(int i=0;i<6;i++){
 			text+=","+cooldowns[i];

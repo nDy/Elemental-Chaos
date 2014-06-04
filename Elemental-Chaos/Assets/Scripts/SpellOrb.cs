@@ -2,36 +2,47 @@
 using System.Collections;
 
 public class SpellOrb : MonoBehaviour {
-
+	
 	enum ELEMENTS {ether=0,fire=1,water=2,wind=3,earth=4,spirit=5};
 
+	public Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+	public RaycastHit hit;
+	
 	public GameObject wind, water, land, fire, spirit;
 	bool oWind, oWater, oLand, oFire, oSpirit; //opaque
 	float sWind, sWater, sLand, sFire, sSpirit; //show
-
+	
 	public Texture crosshair;
-	public GameObject fireballPrefab;
+	public Transform fireballPrefab;
+	public Transform iceballPrefab;
+	public Transform icefirePrefab;
+	public Transform landballPrefab;
+	
+	GameObject fireballPrefabGo;
+	GameObject iceballPrefabGo;
+	GameObject icefirePrefabGo;
+	GameObject landballPrefabGo;
+	
 	Transform position;
 	ELEMENTS[] myElements;
 	float[] cooldowns;
 	public int maxElements = 3;
 	public float elementCooldown = 1;
-
+	
 	void Start () {
 		myElements = new ELEMENTS[maxElements];
 		cooldowns = new float[6];
-
+		
 		float iO = 0.31f; //initial opaccity
 		sWind = iO; sWater = iO; sLand = iO; sFire = iO; sSpirit = iO;
 	}
 	
-
+	
 	void Update () {
-
 		UpdateCooldowns ();
 		HandleInput ();
 	}
-
+	
 	void UpdateCooldowns ()
 	{
 		for(int i=1;i<6;i++){
@@ -42,7 +53,7 @@ public class SpellOrb : MonoBehaviour {
 			}
 		}
 	}
-
+	
 	void HandleInput ()
 	{
 		
@@ -69,23 +80,10 @@ public class SpellOrb : MonoBehaviour {
 		if(Input.GetMouseButtonUp(0)){
 			Cast();
 		}
-
-		if (oWind)
-			Debug.Log("aire");
 		
-		if (oLand)
-			Debug.Log("tierra");
 		
-		if (oWater)
-			Debug.Log("agua");
-		
-		if (oFire)
-			Debug.Log("fuego");
-		
-		if (oSpirit)
-			Debug.Log("espiritu");
 	}
-
+	
 	void selectRune(ELEMENTS element){
 		for (int i=0; i<maxElements; i++){
 			if(myElements[i]==ELEMENTS.ether){
@@ -98,39 +96,60 @@ public class SpellOrb : MonoBehaviour {
 		}
 		
 	}
-
+	
 	void Cast(){
 		int spellCode = 0;
 		for (int i=0; i<maxElements; i++) {
-			spellCode += (int)myElements[i]*(i+1)*10;
+			spellCode += (int)myElements[i]*(int)Mathf.Pow(10,i);
 		}
+		Debug.Log ("cast..." + spellCode);
 		switch(spellCode){
-		case 10:
-			Debug.Log ("cast fireball");
-			Instantiate(fireballPrefab,this.transform.position,GetDirection());
+		case 1:
+			fireballPrefabGo = Instantiate(fireballPrefab,this.transform.position,GetDirection()) as GameObject;
+			Destroy(fireballPrefabGo, 10);
 			break;
-		case 30:
-			Debug.Log ("cast windblow");
+			
+		case 2:
+			iceballPrefabGo = Instantiate(iceballPrefab,this.transform.position,GetDirection()) as GameObject;
+			Destroy (iceballPrefabGo, 10);
+			break;
+			
+		case 21: case 12:
+			Debug.Log("LOLOOOO!");
+			if (Physics.Raycast(transform.position, transform.forward, out hit, 100.0f)){
+				icefirePrefabGo = Instantiate(icefirePrefab,hit.point, Quaternion.LookRotation(Vector3.up)) as GameObject;
+				Destroy (icefirePrefabGo, 10);
+			}
+	
+			break;
+			
+		case 3:
 			Windblow.Cast(transform.position,transform.forward);
 			break;
+			
+		case 4:
+			landballPrefabGo = Instantiate(landballPrefab,this.transform.position,GetDirection()) as GameObject;
+			Destroy (landballPrefab, 10);
+			break;
+			
 		default:
 			Debug.Log ("No spell");
 			break;
 		}
 		ClearElements();
 	}
-
+	
 	Quaternion GetDirection(){
-//		Transform cam = Camera.main.transform;
-//		RaycastHit hit = new RaycastHit();
-//		if (Physics.Raycast (cam.position, cam.forward,out hit, 500)) {
-//			return Quaternion.LookRotation((hit.point-transform.position));
-//
-//		}
-//		return Quaternion.identity;
+		//		Transform cam = Camera.main.transform;
+		//		RaycastHit hit = new RaycastHit();
+		//		if (Physics.Raycast (cam.position, cam.forward,out hit, 500)) {
+		//			return Quaternion.LookRotation((hit.point-transform.position));
+		//
+		//		}
+		//		return Quaternion.identity;
 		return Quaternion.LookRotation (this.transform.forward);
 	}
-
+	
 	void ClearElements(){
 		for(int i=0;i<maxElements;i++){
 			myElements[i]=ELEMENTS.ether;
@@ -141,7 +160,7 @@ public class SpellOrb : MonoBehaviour {
 			oSpirit = false;
 		}
 	}
-
+	
 	void OnGUI(){
 		
 		if (oWind) 
@@ -154,7 +173,7 @@ public class SpellOrb : MonoBehaviour {
 		{
 			if(sWind >= 1)
 				while(sWind > 0.31f)
-				sWind -= Time.deltaTime * 2;
+					sWind -= Time.deltaTime * 2;
 			wind.guiTexture.color = Color.gray * sWind;
 		}
 		
@@ -185,7 +204,7 @@ public class SpellOrb : MonoBehaviour {
 					sWater -= Time.deltaTime * 2;
 			water.guiTexture.color = Color.gray * sWater;
 		}
-
+		
 		if (oFire)
 		{
 			if(sFire < 1)
@@ -213,13 +232,13 @@ public class SpellOrb : MonoBehaviour {
 					sSpirit -= Time.deltaTime * 2;
 			spirit.guiTexture.color = Color.gray * sSpirit;
 		}
-
+		
 		string text="";
 		for(int i=0;i<6;i++){
 			text+=","+cooldowns[i];
 		}
 		GUI.Label(new Rect(0, 0, Screen.width, Screen.height),text );
-
+		
 		GUI.DrawTexture(new Rect(Screen.width/2-25, Screen.height/2-25, 50, 50), crosshair, ScaleMode.ScaleToFit, true, 1.0F);
 	}
 }

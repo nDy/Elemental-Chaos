@@ -1723,6 +1723,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 2e10cbf0462136f4dbe6c033f6b20e27, type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 2e10cbf0462136f4dbe6c033f6b20e27, type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e10cbf0462136f4dbe6c033f6b20e27, type: 3}
   m_RootGameObject: {fileID: 2130022062}
@@ -1765,7 +1773,7 @@ GameObject:
   - 4: {fileID: 980119636}
   - 114: {fileID: 980119635}
   - 114: {fileID: 980119637}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Shooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2684,7 +2692,6 @@ GameObject:
   - 114: {fileID: 2130022065}
   - 136: {fileID: 2130022068}
   - 54: {fileID: 2130022067}
-  - 95: {fileID: 2130022069}
   m_Layer: 8
   m_Name: TheWizard
   m_TagString: Player
@@ -2719,7 +2726,7 @@ Animation:
   m_GameObject: {fileID: 2130022062}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400058, guid: 2e10cbf0462136f4dbe6c033f6b20e27, type: 3}
+  m_Animation: {fileID: 0}
   m_Animations:
   - {fileID: 7400000, guid: 2e10cbf0462136f4dbe6c033f6b20e27, type: 3}
   - {fileID: 7400002, guid: 2e10cbf0462136f4dbe6c033f6b20e27, type: 3}
@@ -2837,20 +2844,6 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 10, z: 0}
---- !u!95 &2130022069
-Animator:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2130022062}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
-  m_HasTransformHierarchy: 1
 --- !u!1 &2131087284
 GameObject:
   m_ObjectHideFlags: 0

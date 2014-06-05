@@ -83,7 +83,7 @@ public class SpellOrb : MonoBehaviour {
 		
 		
 	}
-	
+
 	void selectRune(ELEMENTS element){
 		for (int i=0; i<maxElements; i++){
 			if(myElements[i]==ELEMENTS.ether){
@@ -105,11 +105,13 @@ public class SpellOrb : MonoBehaviour {
 		Debug.Log ("cast..." + spellCode);
 		switch(spellCode){
 		case 1:
+			GameObject.Find("TheWizard").animation.Play("FireBallSpell"); //Loads the animation when click is pressed
 			fireballPrefabGo = Instantiate(fireballPrefab,this.transform.position,GetDirection()) as GameObject;
 			Destroy(fireballPrefabGo, 10);
 			break;
 			
 		case 2:
+			GameObject.Find("TheWizard").animation.Play("HelixSpell"); //Loads the animation when click is pressed
 			iceballPrefabGo = Instantiate(iceballPrefab,this.transform.position,GetDirection()) as GameObject;
 			Destroy (iceballPrefabGo, 10);
 			break;
@@ -138,7 +140,6 @@ public class SpellOrb : MonoBehaviour {
 		}
 		ClearElements();
 	}
-	
 	Quaternion GetDirection(){
 		//		Transform cam = Camera.main.transform;
 		//		RaycastHit hit = new RaycastHit();

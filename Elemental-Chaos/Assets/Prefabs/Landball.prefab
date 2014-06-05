@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  mass: 10
+  mass: 27.4400005
   explosionPrefab: {fileID: 100000, guid: ae9a1f4f796cc204895b3e81a90990c1, type: 2}
 --- !u!135 &13500000
 SphereCollider:

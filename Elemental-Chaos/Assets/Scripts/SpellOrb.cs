@@ -5,7 +5,7 @@ public class SpellOrb : MonoBehaviour {
 	
 	enum ELEMENTS {ether=0,fire=1,water=2,wind=3,earth=4,spirit=5};
 
-	public Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+	public GameObject camera;
 	public RaycastHit hit;
 	
 	public GameObject wind, water, land, fire, spirit;
@@ -105,20 +105,26 @@ public class SpellOrb : MonoBehaviour {
 		Debug.Log ("cast..." + spellCode);
 		switch(spellCode){
 		case 1:
-			GameObject.Find("TheWizard").animation.Play("FireBallSpell"); //Loads the animation when click is pressed
-			fireballPrefabGo = Instantiate(fireballPrefab,this.transform.position,GetDirection()) as GameObject;
-			Destroy(fireballPrefabGo, 10);
+			if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 100.0f)){
+				GameObject.Find("TheWizard").animation.Play("FireBallSpell"); //Loads the animation when click is pressed
+				Vector3 dir = hit.point - this.transform.position;
+				fireballPrefabGo = Instantiate(fireballPrefab,this.transform.position,Quaternion.LookRotation(dir)) as GameObject;
+				Destroy(fireballPrefabGo, 10);
+			}
 			break;
 			
 		case 2:
-			GameObject.Find("TheWizard").animation.Play("HelixSpell"); //Loads the animation when click is pressed
-			iceballPrefabGo = Instantiate(iceballPrefab,this.transform.position,GetDirection()) as GameObject;
-			Destroy (iceballPrefabGo, 10);
+			if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 100.0f)){
+				GameObject.Find("TheWizard").animation.Play("HelixSpell");
+				Vector3 dir = hit.point - this.transform.position;
+				iceballPrefabGo = Instantiate(iceballPrefab,this.transform.position,Quaternion.LookRotation(dir)) as GameObject;
+				Destroy (iceballPrefabGo, 10);
+			}
+
 			break;
 			
 		case 21: case 12:
-			Debug.Log("LOLOOOO!");
-			if (Physics.Raycast(transform.position, transform.forward, out hit, 100.0f)){
+			if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 100.0f)){
 				icefirePrefabGo = Instantiate(icefirePrefab,hit.point, Quaternion.LookRotation(Vector3.up)) as GameObject;
 				Destroy (icefirePrefabGo, 10);
 			}
@@ -126,12 +132,15 @@ public class SpellOrb : MonoBehaviour {
 			break;
 			
 		case 3:
-			Windblow.Cast(transform.position,transform.forward);
+			Windblow.Cast(transform.position,camera.transform.forward);
 			break;
 			
 		case 4:
-			landballPrefabGo = Instantiate(landballPrefab,this.transform.position,GetDirection()) as GameObject;
-			Destroy (landballPrefab, 10);
+			if (Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 100.0f)){
+				Vector3 dir = hit.point - this.transform.position;
+				landballPrefabGo = Instantiate(landballPrefab,this.transform.position,Quaternion.LookRotation(dir)) as GameObject;
+				Destroy (landballPrefab, 10);
+			}
 			break;
 			
 		default:

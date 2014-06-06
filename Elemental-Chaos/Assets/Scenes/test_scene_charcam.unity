@@ -1235,6 +1235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5bd8f17513c564e927a00caf82bfbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 0}
   wind: {fileID: 798380732}
   water: {fileID: 646770888}
   land: {fileID: 70783890}
@@ -1791,6 +1792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5bd8f17513c564e927a00caf82bfbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 743031225}
   wind: {fileID: 798380732}
   water: {fileID: 646770888}
   land: {fileID: 70783890}

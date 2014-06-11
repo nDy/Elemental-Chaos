@@ -17,11 +17,13 @@ public class SpellOrb : MonoBehaviour {
 	public Transform iceballPrefab;
 	public Transform icefirePrefab;
 	public Transform landballPrefab;
+	public Transform shieldballPrefab;
 	
 	GameObject fireballPrefabGo;
 	GameObject iceballPrefabGo;
 	GameObject icefirePrefabGo;
 	GameObject landballPrefabGo;
+	GameObject shieldballPrefabGo;
 	
 	Transform position;
 	ELEMENTS[] myElements;
@@ -141,6 +143,11 @@ public class SpellOrb : MonoBehaviour {
 				landballPrefabGo = Instantiate(landballPrefab,this.transform.position,Quaternion.LookRotation(dir)) as GameObject;
 				Destroy (landballPrefab, 10);
 			}
+			break;
+
+		case 5:
+			shieldballPrefabGo = Instantiate(shieldballPrefab,this.transform.position,Quaternion.identity) as GameObject;
+			Destroy (shieldballPrefab, 10);
 			break;
 			
 		default:
